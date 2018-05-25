@@ -4,9 +4,10 @@ import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -18,7 +19,8 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 
 	SpriteBatch batch;
 	ShapeRenderer sr;
-
+	BitmapFont font;
+	
 	public int screenW, screenH;
 
 	public int sizeX, sizeY;
@@ -34,12 +36,14 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 	public Direction dir;
 
 	public boolean aimHelp;
-
+	public boolean running;
+	
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		sr = new ShapeRenderer();
-
+		font = new BitmapFont();
+		
 		screenW = Gdx.graphics.getWidth();
 		screenH = Gdx.graphics.getHeight();
 
@@ -56,8 +60,8 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 				grid[x][y] = 0;
 
 		grid[posX][posY] = 1;
-		length = 4;
-
+		length = 15;
+		
 		dir = Direction.N;
 
 		lastUpdate = System.currentTimeMillis();
@@ -75,16 +79,17 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 		resetFood();
 		
 		Gdx.input.setInputProcessor(this);
+		
+		running = true;
 	}
 
 	@Override
-	public void render() {
-		update();
-
+	public void render () {
+		if(running)
+			update();
+		
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.end();
 		sr.begin(ShapeType.Filled);
 
 		sr.setColor(230f / 255f, 230f / 255f, 230f / 255f, 1.0f);
@@ -120,6 +125,13 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 		}
 
 		sr.end();
+		
+
+		batch.begin();
+		font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
+		font.draw(batch, "Running: " + running, 5, screenH - 5);
+		font.draw(batch, "Length: " + length, 5, screenH - 20);
+		batch.end();
 	}
 
 	public void update() {
@@ -177,9 +189,11 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 				length++;
 				resetFood();
 			}
-			
-			else if (grid[posX][posY] <= 0)
+      
+			if(grid[posX][posY] == 0)
 				grid[posX][posY] = 1;
+			else if(grid[posX][posY] > 0)
+				running = false;
 		}
 	}
 
