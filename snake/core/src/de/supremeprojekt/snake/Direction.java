@@ -6,7 +6,7 @@ public enum Direction {
 	N, E, S, W;
 	
 	public Direction getNewDir(int keyIn) {
-		Direction newdir = getDir(keyIn);
+		Direction newdir = getDirByKey(keyIn);
 		
 		if(newdir == null)
 			return null;
@@ -17,7 +17,23 @@ public enum Direction {
 		return newdir;
 	}
 	
-	private Direction getDir(int keyIn) {
+	public static Direction getDir(int index) {
+		switch(index)
+		{
+		case 0:
+			return N;
+		case 1:
+			return E;
+		case 2:
+			return S;
+		case 3:
+			return W;
+			default:
+				return null;
+		}
+	}
+	
+	private Direction getDirByKey(int keyIn) {
 		switch(keyIn)
 		{
 		case Keys.UP:
