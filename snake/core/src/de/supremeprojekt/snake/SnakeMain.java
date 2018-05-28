@@ -19,12 +19,8 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 
 	SpriteBatch batch;
 	ShapeRenderer sr;
-<<<<<<< HEAD
 	BitmapFont font;
 	
-=======
-
->>>>>>> snake2
 	public int screenW, screenH;
 
 	public int sizeX, sizeY;
@@ -40,22 +36,14 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 	public Direction dir;
 
 	public boolean aimHelp;
-<<<<<<< HEAD
 	public boolean running;
 	
-=======
-
->>>>>>> snake2
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		sr = new ShapeRenderer();
-<<<<<<< HEAD
 		font = new BitmapFont();
 		
-=======
-
->>>>>>> snake2
 		screenW = Gdx.graphics.getWidth();
 		screenH = Gdx.graphics.getHeight();
 
@@ -72,13 +60,8 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 				grid[x][y] = 0;
 
 		grid[posX][posY] = 1;
-<<<<<<< HEAD
 		length = 15;
 		
-=======
-		length = 4;
-
->>>>>>> snake2
 		dir = Direction.N;
 
 		lastUpdate = System.currentTimeMillis();
@@ -101,16 +84,10 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void render () {
 		if(running)
 			update();
 		
-=======
-	public void render() {
-		update();
-
->>>>>>> snake2
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		sr.begin(ShapeType.Filled);
@@ -213,13 +190,9 @@ public class SnakeMain extends ApplicationAdapter implements InputProcessor {
 				resetFood();
 			}
 			
-<<<<<<< HEAD
 			if(grid[posX][posY] == 0)
-=======
-			else if (grid[posX][posY] <= 0)
->>>>>>> snake2
 				grid[posX][posY] = 1;
-			else if(grid[posX][posY] > 0)
+			else
 				running = false;
 		}
 	}
